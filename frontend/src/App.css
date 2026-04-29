@@ -582,7 +582,7 @@ tbody tr:hover td { background: #fafafa; }
 }
 @media (max-width: 768px) {
   .sidebar { width: 64px; }
-  .logo-text, .nav-txt, .sidebar-footer { display: none; }
+  .logo-text, .nav-txt, .version { display: none; }
   .logo    { justify-content: center; padding: 18px 0; }
   .nav-link{ justify-content: center; padding: 14px 0; margin: 2px 4px; }
   .content { margin-left: 64px; padding: 16px; }
