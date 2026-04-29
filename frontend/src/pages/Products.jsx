@@ -1,7 +1,8 @@
 import { useEffect, useState, useCallback } from 'react';
 import { getProducts, createProduct, updateProduct, deleteProduct, seedProducts, adjustStock } from '../api';
 
-const UNITS = ['unité', 'kg', 'g', 'L', 'ml', 'boîte', 'sachet', 'rouleau', 'paquet'];
+const UNITS = ['unité', 'kg', 'g', 'L', 'ml', 'boîte', 'sachet', 'rouleau', 'paquet',"pièce",
+"bouteille" ];
 const CATEGORIES = ['Général', 'Alimentaire', 'Épices & Condiments', 'Produits Laitiers', 'Boissons', 'Nettoyage', 'Emballage'];
 
 const emptyForm = { name: '', unit: 'unité', minStock: 5, category: 'Général' };
