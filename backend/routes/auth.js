@@ -24,7 +24,7 @@ function tokenCookieOptions() {
   return {
     httpOnly: true,
     secure: process.env.COOKIE_SECURE === 'true',
-    sameSite: 'lax',
+    sameSite: 'none',
     path: '/',
     maxAge: 24 * 60 * 60 * 1000,
   };
