@@ -37,7 +37,11 @@ function PrivateLayout({ user, onLogout }) {
         </NavLink>
         <div className="sidebar-footer">
           <span className="version">{user.email} (admin)</span>
-          <button className="btn btn-secondary btn-logout" onClick={handleLogout}>Se deconnecter</button>
+          <button className="btn btn-secondary btn-logout" onClick={handleLogout}>
+  <span className="nav-icon">🚪</span>
+  <span className="nav-txt">Se deconnecter</span>
+</button>
+
         </div>
       </nav>
       <main className="content">
