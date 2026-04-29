@@ -20,16 +20,6 @@ function signToken(user) {
   );
 }
 
-function tokenCookieOptions() {
-  return {
-    httpOnly: true,
-    secure: process.env.COOKIE_SECURE === 'true',
-    sameSite: 'none',
-    path: '/',
-    maxAge: 24 * 60 * 60 * 1000,
-  };
-}
-
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body || {};
@@ -47,9 +37,9 @@ router.post('/login', async (req, res) => {
     if (!ok) return res.status(401).json({ error: 'Identifiants invalides' });
 
     const token = signToken(user);
-    res.cookie('token', token, tokenCookieOptions());
 
     return res.json({
+      token,
       user: {
         id: user._id,
         email: user.email,
@@ -62,12 +52,6 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/logout', (req, res) => {
-  res.clearCookie('token', {
-    httpOnly: true,
-    secure: process.env.COOKIE_SECURE === 'true',
-    sameSite: 'lax',
-    path: '/',
-  });
   res.json({ message: 'Deconnecte' });
 });
 

@@ -1,12 +1,29 @@
-const BASE = import.meta.env.VITE_API_URL +'/api';
+const BASE = import.meta.env.VITE_API_URL + '/api';
+
+function getToken() {
+  return localStorage.getItem('token');
+}
+
+function setToken(token) {
+  if (token) localStorage.setItem('token', token);
+  else localStorage.removeItem('token');
+}
 
 export async function fetchJSON(path, options = {}) {
   const isFormData = typeof FormData !== 'undefined' && options.body instanceof FormData;
+  const token = getToken();
+
+  const headers = {
+    ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
+    ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    ...options.headers,
+  };
+
   const res = await fetch(BASE + path, {
-    credentials: 'include',
-    headers: isFormData ? {} : { 'Content-Type': 'application/json' },
     ...options,
+    headers,
   });
+
   const text = await res.text();
   let data = null;
   if (text) {
@@ -21,10 +38,19 @@ export async function fetchJSON(path, options = {}) {
 }
 
 // ── Auth ──────────────────────────────────────────────────────────────────────
-export const login = (body) => fetchJSON('/auth/login', { method: 'POST', body: JSON.stringify(body) });
-export const logout = () => fetchJSON('/auth/logout', { method: 'POST' });
+export const login = async (body) => {
+  const data = await fetchJSON('/auth/login', { method: 'POST', body: JSON.stringify(body) });
+  setToken(data?.token);
+  return data;
+};
+
+export const logout = async () => {
+  setToken(null);
+  return fetchJSON('/auth/logout', { method: 'POST' });
+};
+
 export const getMe = () => fetchJSON('/auth/me');
-export const changePassword = (body) => fetchJSON('/change-password', { method: 'POST', body: JSON.stringify(body) });
+export const changePassword = (body) => fetchJSON('/auth/change-password', { method: 'POST', body: JSON.stringify(body) });
 
 // ── Products ──────────────────────────────────────────────────────────────────
 export const getProducts        = (params = '') => fetchJSON(`/products${params}`);
