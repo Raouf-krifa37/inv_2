@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
 import { getProducts, createProduct, updateProduct, deleteProduct, seedProducts, adjustStock } from '../api';
 
-const UNITS = ['unité', 'kg', 'g', 'L', 'ml', 'boîte', 'sachet', 'rouleau', 'paquet',"pièce",
+const UNITS = ['unité', 'kg', 'L', 'boîte', 'sachet', 'paquet',"pièce",
 "bouteille" , 'sacs' ,'Fardo' ];
 const CATEGORIES = ['Général', 'Alimentaire', 'Épices & Condiments', 'Produits Laitiers', 'Boissons', 'Nettoyage', 'Emballage'];
 
