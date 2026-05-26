@@ -1,4 +1,5 @@
-const BASE = import.meta.env.VITE_API_URL + '/api';
+const API_ORIGIN = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
+const BASE = (API_ORIGIN ? API_ORIGIN : '') + '/api';
 
 function getToken() {
   return localStorage.getItem('token');
@@ -19,10 +20,15 @@ export async function fetchJSON(path, options = {}) {
     ...options.headers,
   };
 
-  const res = await fetch(BASE + path, {
-    ...options,
-    headers,
-  });
+  let res;
+  try {
+    res = await fetch(BASE + path, {
+      ...options,
+      headers,
+    });
+  } catch {
+    throw new Error('Impossible de joindre le serveur');
+  }
 
   const text = await res.text();
   let data = null;

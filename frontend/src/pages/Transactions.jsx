@@ -91,8 +91,12 @@ export default function Transactions() {
     <div className="page">
       <div className="page-header">
         <div>
-          <h1>🔄 Mouvements de Stock</h1>
+          <h1>Mouvements de Stock</h1>
           <p className="dash-subtitle">{total} mouvement(s) enregistré(s)</p>
+        </div>
+        <div className="btn-group">
+          <button className="btn btn-secondary" onClick={loadTx}>Actualiser</button>
+          <button className="btn btn-primary">Exporter Rapport</button>
         </div>
       </div>
 
@@ -123,12 +127,12 @@ export default function Transactions() {
                 <button type="button"
                   className={`toggle-btn ${form.type === 'in' ? 'toggle-in' : ''}`}
                   onClick={() => setForm({...form, type: 'in'})}>
-                  ⬆ Entrée
+                  Entrée
                 </button>
                 <button type="button"
                   className={`toggle-btn ${form.type === 'out' ? 'toggle-out' : ''}`}
                   onClick={() => setForm({...form, type: 'out'})}>
-                  ⬇ Sortie
+                  Sortie
                 </button>
               </div>
             </div>
@@ -163,7 +167,7 @@ export default function Transactions() {
             className={`btn ${form.type === 'in' ? 'btn-success' : 'btn-danger-solid'}`}
             disabled={loading || insufficientStock}
           >
-            {loading ? '⏳ Enregistrement...' : form.type === 'in' ? '⬆ Enregistrer Entrée' : '⬇ Enregistrer Sortie'}
+            {loading ? 'Enregistrement...' : form.type === 'in' ? 'Enregistrer Entrée' : 'Enregistrer Sortie'}
           </button>
         </form>
       </div>
@@ -198,15 +202,15 @@ export default function Transactions() {
           <div className="loading">⏳ Chargement...</div>
         ) : (
           <>
-            <table>
+            <table className="table-compact tx-table">
               <thead>
                 <tr>
-                  <th>Produit</th>
-                  <th>Type</th>
-                  <th>Quantité</th>
-                  <th>Note</th>
-                  <th>Date & Heure</th>
-                  <th>Action</th>
+                  <th className="col-product">Produit</th>
+                  <th className="col-type">Type</th>
+                  <th className="col-num">Quantité</th>
+                  <th className="col-note">Note</th>
+                  <th className="col-date">Date & Heure</th>
+                  <th className="col-actions">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -214,16 +218,16 @@ export default function Transactions() {
                   <tr><td colSpan={6} className="empty-cell">Aucun mouvement trouvé</td></tr>
                 ) : transactions.map(t => (
                   <tr key={t._id}>
-                    <td className="rtl prod-name">{t.productName}</td>
-                    <td>
+                    <td className="rtl prod-name col-product">{t.productName}</td>
+                    <td className="col-type">
                       <span className={`badge ${t.type === 'in' ? 'badge-in' : 'badge-out'}`}>
-                        {t.type === 'in' ? '⬆ Entrée' : '⬇ Sortie'}
+                        {t.type === 'in' ? 'Entrée' : 'Sortie'}
                       </span>
                     </td>
-                    <td><strong>{t.quantity}</strong></td>
-                    <td className="note-cell">{t.note || <span className="no-note">—</span>}</td>
-                    <td className="date-cell">{new Date(t.createdAt).toLocaleString('fr-DZ')}</td>
-                    <td>
+                    <td className="col-num"><strong>{t.quantity}</strong></td>
+                    <td className="note-cell col-note">{t.note || <span className="no-note">—</span>}</td>
+                    <td className="date-cell col-date">{new Date(t.createdAt).toLocaleString('fr-DZ')}</td>
+                    <td className="col-actions">
                       <button className="btn-icon" onClick={() => handleDelete(t._id)} title="Annuler cette transaction">↩️</button>
                     </td>
                   </tr>

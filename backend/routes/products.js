@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
 const Product = require('../models/Product');
 
@@ -34,7 +35,14 @@ router.get('/', async (req, res) => {
     let filter = {};
     if (search)    filter.name     = { $regex: search, $options: 'i' };
     if (category)  filter.category = category;
-    if (lowStock === 'true') filter.$expr = { $lte: ['$quantity', '$minStock'] };
+    if (lowStock === 'true') {
+      filter.$expr = {
+        $and: [
+          { $gt: ['$quantity', 0] },
+          { $lte: ['$quantity', '$minStock'] },
+        ],
+      };
+    }
 
     const products = await Product.find(filter).sort({ name: 1 }).lean();
     res.json(products);
@@ -56,6 +64,9 @@ router.get('/meta/categories', async (req, res) => {
 // GET single product
 router.get('/:id', async (req, res) => {
   try {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      return res.status(400).json({ error: 'Identifiant invalide' });
+    }
     const product = await Product.findById(req.params.id);
     if (!product) return res.status(404).json({ error: 'Produit introuvable' });
     res.json(product);
@@ -89,6 +100,9 @@ router.post('/', async (req, res) => {
 // PUT update product (name, unit, minStock, category — NOT quantity directly)
 router.put('/:id', async (req, res) => {
   try {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      return res.status(400).json({ error: 'Identifiant invalide' });
+    }
     const { name, unit, minStock, category } = req.body;
     const update = {};
     if (name !== undefined) {
@@ -120,13 +134,18 @@ router.put('/:id', async (req, res) => {
 // PATCH adjust stock directly (manual correction)
 router.patch('/:id/stock', async (req, res) => {
   try {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      return res.status(400).json({ error: 'Identifiant invalide' });
+    }
     const { quantity } = req.body;
-    if (quantity === undefined || quantity < 0)
+    const qty = Number(quantity);
+    if (quantity === undefined || !Number.isFinite(qty) || qty < 0) {
       return res.status(400).json({ error: 'Quantité invalide' });
+    }
 
     const product = await Product.findByIdAndUpdate(
       req.params.id,
-      { quantity: Number(quantity) },
+      { quantity: qty },
       { new: true }
     );
     if (!product) return res.status(404).json({ error: 'Produit introuvable' });
@@ -139,6 +158,9 @@ router.patch('/:id/stock', async (req, res) => {
 // DELETE product
 router.delete('/:id', async (req, res) => {
   try {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      return res.status(400).json({ error: 'Identifiant invalide' });
+    }
     const product = await Product.findByIdAndDelete(req.params.id);
     if (!product) return res.status(404).json({ error: 'Produit introuvable' });
     res.json({ message: 'Produit supprimé' });

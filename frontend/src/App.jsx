@@ -20,28 +20,31 @@ function PrivateLayout({ user, onLogout }) {
     <div className="app">
       <nav className="sidebar">
         <div className="logo">
-          <span className="logo-icon">🏪</span>
-          <span className="logo-text">المخزن</span>
+          <div className="logo-mark">▣</div>
+          <div className="logo-copy">
+            <span className="logo-text">المخزن</span>
+            <span className="logo-sub">Inventory Management</span>
+          </div>
         </div>
         <NavLink to="/" end className={({ isActive }) => 'nav-link' + (isActive ? ' active' : '')}>
-          <span className="nav-icon">📊</span><span className="nav-txt">Tableau de Bord</span>
+          <span className="nav-icon">◫</span><span className="nav-txt">Tableau de Bord</span>
         </NavLink>
         <NavLink to="/products" className={({ isActive }) => 'nav-link' + (isActive ? ' active' : '')}>
-          <span className="nav-icon">📦</span><span className="nav-txt">Produits</span>
+          <span className="nav-icon">◧</span><span className="nav-txt">Produits</span>
         </NavLink>
         <NavLink to="/transactions" className={({ isActive }) => 'nav-link' + (isActive ? ' active' : '')}>
-          <span className="nav-icon">🔄</span><span className="nav-txt">Mouvements</span>
+          <span className="nav-icon">↔</span><span className="nav-txt">Mouvements</span>
         </NavLink>
         <NavLink to="/change-password" className={({ isActive }) => 'nav-link' + (isActive ? ' active' : '')}>
-          <span className="nav-icon">🔐</span><span className="nav-txt">Mot de passe</span>
+          <span className="nav-icon">◍</span><span className="nav-txt">Mot de passe</span>
         </NavLink>
         <div className="sidebar-footer">
-          <span className="version">{user.email} (admin)</span>
+          <div className="version">CONNECTÉ EN TANT QUE</div>
+          <div className="user-chip">{user.email}</div>
           <button className="btn btn-secondary btn-logout" onClick={handleLogout}>
-  <span className="nav-icon">🚪</span>
-  <span className="nav-txt">Se deconnecter</span>
-</button>
-
+            <span className="nav-icon">↪</span>
+            <span className="nav-txt">Se deconnecter</span>
+          </button>
         </div>
       </nav>
       <main className="content">

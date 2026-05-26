@@ -126,11 +126,11 @@ export default function Products() {
       {/* Header */}
       <div className="page-header">
         <div>
-          <h1>📦 Produits</h1>
+          <h1>Produits</h1>
           <p className="dash-subtitle">{products.length} produit(s) au total</p>
         </div>
         <div className="btn-group">
-          <button className="btn btn-secondary" onClick={handleSeed}>🌱 Importer Liste</button>
+          <button className="btn btn-secondary" onClick={handleSeed}>Importer Liste</button>
           <button className="btn btn-primary"   onClick={openCreate}>+ Nouveau Produit</button>
         </div>
       </div>
@@ -152,7 +152,7 @@ export default function Products() {
         <input
           className="search-input"
           type="text"
-          placeholder="🔍 Rechercher un produit..."
+          placeholder="Rechercher un produit..."
           value={search}
           onChange={e => setSearch(e.target.value)}
         />
@@ -232,16 +232,16 @@ export default function Products() {
       {pageLoading ? (
         <div className="loading">⏳ Chargement...</div>
       ) : (
-        <table>
+        <table className="table-compact products-table">
           <thead>
             <tr>
-              <th>Produit</th>
-              <th>Catégorie</th>
-              <th>Quantité</th>
-              <th>Unité</th>
-              <th>Seuil Min</th>
-              <th>Statut</th>
-              <th>Actions</th>
+              <th className="col-product">Produit</th>
+              <th className="col-category">Catégorie</th>
+              <th className="col-num">Quantité</th>
+              <th className="col-unit">Unité</th>
+              <th className="col-num">Seuil Min</th>
+              <th className="col-status">Statut</th>
+              <th className="col-actions">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -249,11 +249,11 @@ export default function Products() {
               <tr><td colSpan={7} className="empty-cell">Aucun produit trouvé</td></tr>
             ) : displayed.map(p => (
               <tr key={p._id} className={p.quantity === 0 ? 'row-danger' : p.quantity <= p.minStock ? 'row-warning' : ''}>
-                <td className="rtl prod-name">{p.name}</td>
-                <td><span className="cat-tag">{p.category}</span></td>
-                <td><strong className={p.quantity === 0 ? 'val-out' : p.quantity <= p.minStock ? 'val-neg' : ''}>{p.quantity}</strong></td>
-                <td>{p.unit}</td>
-                <td>{p.minStock}</td>
+                <td className="rtl prod-name col-product">{p.name}</td>
+                <td className="col-category"><span className="cat-tag">{p.category}</span></td>
+                <td className="col-num"><strong className={p.quantity === 0 ? 'val-out' : p.quantity <= p.minStock ? 'val-neg' : ''}>{p.quantity}</strong></td>
+                <td className="col-unit">{p.unit}</td>
+                <td className="col-num">{p.minStock}</td>
                 <td>
                   {p.quantity === 0
                     ? <span className="badge badge-danger">Rupture</span>
@@ -261,7 +261,7 @@ export default function Products() {
                     ? <span className="badge badge-warning">Faible</span>
                     : <span className="badge badge-ok">OK</span>}
                 </td>
-                <td className="actions-cell">
+                <td className="actions-cell col-actions">
                   <button className="btn-icon" onClick={() => openEdit(p)}    title="Modifier">✏️</button>
                   <button className="btn-icon" onClick={() => openAdjust(p)}  title="Corriger stock">🔧</button>
                   <button className="btn-icon" onClick={() => handleDelete(p._id, p.name)} title="Supprimer">🗑️</button>

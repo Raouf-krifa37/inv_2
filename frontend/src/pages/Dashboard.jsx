@@ -92,25 +92,25 @@ export default function Dashboard() {
       {/* Header */}
       <div className="dash-header">
         <div>
-          <h1>📊 Tableau de Bord</h1>
+          <h1>Tableau de Bord</h1>
           <p className="dash-subtitle">Analyse hebdomadaire et mensuelle des consommations</p>
         </div>
-        <button className="btn btn-secondary" onClick={load}>↻ Actualiser</button>
+        <button className="btn btn-secondary" onClick={load}>Actualiser</button>
       </div>
 
       {/* KPIs */}
       <div className="cards">
-        <KpiCard value={stats.totalProducts}                label="Total Produits"      color="blue"   icon="📦" />
-        <KpiCard value={stats.weekly.totals.totalConsumed}  label="Consommé (semaine)"  color="purple" icon="⬇" />
-        <KpiCard value={stats.monthly.totals.totalConsumed} label="Consommé (mois)"     color="orange" icon="📉" />
-        <KpiCard value={stats.lowStockCount}                label="Stock Faible"        color="red"    icon="⚠️" />
-        <KpiCard value={stats.outOfStock}                   label="Rupture de Stock"    color="danger" icon="🚫" />
+        <KpiCard value={stats.totalProducts}                label="Total Produits"      color="blue"   icon="◫" />
+        <KpiCard value={stats.weekly.totals.totalConsumed}  label="Consommé (semaine)"  color="purple" icon="↓" />
+        <KpiCard value={stats.monthly.totals.totalConsumed} label="Consommé (mois)"     color="orange" icon="↘" />
+        <KpiCard value={stats.lowStockCount}                label="Stock Faible"        color="red"    icon="!" />
+        <KpiCard value={stats.outOfStock}                   label="Rupture de Stock"    color="danger" icon="⊘" />
       </div>
 
       {/* Top 5 */}
       {stats.topConsumedThisMonth.length > 0 && (
         <div className="section">
-          <h2>🏆 Top 5 — Plus Consommés ce Mois</h2>
+          <h2>Top 5 — Plus Consommés ce Mois</h2>
           <div className="top-consumed">
             {stats.topConsumedThisMonth.map((item, i) => (
               <div key={item.productId || i} className="top-item">

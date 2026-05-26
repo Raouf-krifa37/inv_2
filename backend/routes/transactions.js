@@ -1,4 +1,5 @@
 const express = require('express');
+const mongoose = require('mongoose');
 const router = express.Router();
 const Transaction = require('../models/Transaction');
 const Product = require('../models/Product');
@@ -10,8 +11,18 @@ router.get('/', async (req, res) => {
     const parsedPage = Math.max(1, Number(page) || 1);
     const parsedLimit = Math.min(200, Math.max(1, Number(limit) || 100));
     const filter = {};
-    if (productId) filter.product = productId;
-    if (type)      filter.type    = type;
+    if (productId) {
+      if (!mongoose.isValidObjectId(productId)) {
+        return res.status(400).json({ error: 'productId invalide' });
+      }
+      filter.product = productId;
+    }
+    if (type) {
+      if (!['in', 'out'].includes(type)) {
+        return res.status(400).json({ error: 'type doit être "in" ou "out"' });
+      }
+      filter.type = type;
+    }
 
     const [transactions, total] = await Promise.all([
       Transaction.find(filter)
@@ -36,6 +47,9 @@ router.post('/', async (req, res) => {
 
     // Validate input
     if (!productId) return res.status(400).json({ error: 'productId est requis' });
+    if (!mongoose.isValidObjectId(productId)) {
+      return res.status(400).json({ error: 'productId invalide' });
+    }
     if (!type || !['in', 'out'].includes(type))
       return res.status(400).json({ error: 'type doit être "in" ou "out"' });
     const qty = Number(quantity);
@@ -93,6 +107,9 @@ router.post('/', async (req, res) => {
 // DELETE transaction (with stock reversal)
 router.delete('/:id', async (req, res) => {
   try {
+    if (!mongoose.isValidObjectId(req.params.id)) {
+      return res.status(400).json({ error: 'Identifiant invalide' });
+    }
     const tx = await Transaction.findById(req.params.id);
     if (!tx) return res.status(404).json({ error: 'Transaction introuvable' });
 

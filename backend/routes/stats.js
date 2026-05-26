@@ -70,9 +70,18 @@ function calcTotals(data) {
 
 router.get('/', async (req, res) => {
   try {
+    const lowStockFilter = {
+      $expr: {
+        $and: [
+          { $gt: ['$quantity', 0] },
+          { $lte: ['$quantity', '$minStock'] },
+        ],
+      },
+    };
+
     const [totalProducts, lowStockProducts, outOfStock] = await Promise.all([
       Product.countDocuments(),
-      Product.find({ $expr: { $lte: ['$quantity', '$minStock'] } })
+      Product.find(lowStockFilter)
         .select('name quantity minStock unit category')
         .sort({ quantity: 1 })
         .lean(),

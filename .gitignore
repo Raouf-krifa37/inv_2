@@ -1,2 +1,7 @@
 backup/
 backup.bat
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
