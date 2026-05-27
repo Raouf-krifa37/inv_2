@@ -8,10 +8,26 @@ const bcrypt = require('bcryptjs');
 
 const app = express();
 
+function parseAllowedOrigins() {
+  const raw = process.env.FRONTEND_ORIGIN;
+  if (raw && raw.trim()) {
+    return raw
+      .split(',')
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
+  return ['http://localhost:5173', 'https://stock-saraya10.vercel.app'];
+}
+
 // Middleware
 app.use(
   cors({
-    origin: process.env.FRONTEND_ORIGIN || 'http://localhost:5173',
+    origin(origin, callback) {
+      const allowed = parseAllowedOrigins();
+      if (!origin) return callback(null, true);
+      if (allowed.includes(origin)) return callback(null, true);
+      return callback(new Error('Not allowed by CORS'));
+    },
     credentials: true,
   })
 );
