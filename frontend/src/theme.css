@@ -1,0 +1,192 @@
+/* Theme tokens — used across App.css (light default, dark via html[data-theme="dark"]) */
+:root {
+  --transition-theme: color 0.3s ease, background-color 0.3s ease,
+    border-color 0.3s ease, box-shadow 0.3s ease;
+
+  --bg-body: #f6f8fd;
+  --bg-app: #f6f8fd;
+  --bg-content: #f6f8fd;
+  --bg-card: #ffffff;
+  --bg-section: #ffffff;
+  --bg-input: #ffffff;
+  --bg-input-muted: #fafafa;
+  --bg-table-head: #f5f8ff;
+  --bg-table-row-hover: #fafafa;
+  --bg-pill-wrap: #f5f8ff;
+  --bg-totals: #f8fafc;
+  --bg-top-item: #ffffff;
+  --bg-top-item-hover: #f8fafc;
+  --bg-kpi-icon: #eef2ff;
+  --bg-modal: #ffffff;
+  --bg-modal-input: #fafafa;
+  --bg-toggle: #f9fafb;
+  --bg-tx-form: #ffffff;
+  --bg-change-password: #ffffff;
+  --bg-top-consumed: #ffffff;
+  --bg-spill: #ffffff;
+  --bg-tab: #ffffff;
+  --bg-consumption-table: transparent;
+
+  --sidebar-gradient-from: #0a1530;
+  --sidebar-gradient-to: #091327;
+  --sidebar-border: rgba(255, 255, 255, 0.05);
+  --sidebar-nav: rgba(226, 232, 240, 0.78);
+  --sidebar-nav-hover-bg: rgba(255, 255, 255, 0.08);
+  --sidebar-nav-active-bg: #4f5cf3;
+  --sidebar-nav-active-text: #ffffff;
+  --sidebar-icon-bg: rgba(255, 255, 255, 0.06);
+  --sidebar-icon-active-bg: rgba(255, 255, 255, 0.2);
+  --sidebar-logo-mark-bg: rgba(255, 255, 255, 0.08);
+  --sidebar-logo-mark-border: rgba(255, 255, 255, 0.14);
+  --sidebar-user-chip-bg: rgba(255, 255, 255, 0.04);
+  --sidebar-user-chip-border: rgba(255, 255, 255, 0.08);
+  --sidebar-user-chip-text: #d7e2ff;
+  --sidebar-version: rgba(173, 189, 224, 0.75);
+  --sidebar-logo-sub: rgba(224, 231, 255, 0.72);
+
+  --text-primary: #111827;
+  --text-heading: #0f172a;
+  --text-secondary: #6b7280;
+  --text-muted: #9ca3af;
+  --text-logo: #ffffff;
+
+  --border-default: #e5e7eb;
+  --border-card: #e7ecf7;
+  --border-subtle: #e8edf7;
+  --border-input: #dbe3f2;
+  --border-table: #e8edf7;
+  --border-cell: #f3f4f6;
+
+  --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.04);
+  --shadow-card-hover: 0 2px 8px rgba(15, 23, 42, 0.06);
+  --shadow-modal: 0 24px 64px rgba(0, 0, 0, 0.2);
+
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-text: #374151;
+  --btn-secondary-border: #dbe1ef;
+  --btn-secondary-hover: #f8faff;
+  --btn-icon-hover: #f3f4f6;
+
+  --modal-actions-border: #f3f4f6;
+  --modal-close-hover-bg: #f3f4f6;
+  --modal-close-hover-text: #374151;
+
+  --row-warning-bg: #fffbeb;
+  --row-danger-bg: #fef2f2;
+
+  --cat-tag-bg: #f3f4f6;
+  --cat-tag-text: #6b7280;
+
+  --bar-track: #f3f4f6;
+  --period-count-bg: #f3f4f6;
+
+  --loading-text: #9ca3af;
+
+  /* Login / auth */
+  --auth-page-bg: #eef2f8;
+  --auth-page-gradient-1: rgba(79, 92, 243, 0.07);
+  --auth-page-gradient-2: rgba(79, 92, 243, 0.06);
+  --auth-page-gradient-end: #f4f6fb;
+  --auth-card-bg: #ffffff;
+  --auth-card-border: rgba(226, 232, 240, 0.9);
+  --auth-card-shadow: 0 18px 48px rgba(15, 23, 42, 0.08);
+  --auth-title: #1e293b;
+  --auth-sub: #64748b;
+  --auth-input-bg: #eef2ff;
+  --auth-input-border: #e2e8f0;
+  --auth-input-text: #1e293b;
+  --auth-input-focus-bg: #ffffff;
+  --auth-icon: #94a3b8;
+  --auth-remember: #475569;
+  --auth-footer: #94a3b8;
+  --auth-footer-links: #64748b;
+}
+
+html[data-theme='dark'] {
+  --bg-body: #0f172a;
+  --bg-app: #0f172a;
+  --bg-content: #0f172a;
+  --bg-card: #1e293b;
+  --bg-section: #1e293b;
+  --bg-input: #0f172a;
+  --bg-input-muted: #1e293b;
+  --bg-table-head: #1e293b;
+  --bg-table-row-hover: #273549;
+  --bg-pill-wrap: #1e293b;
+  --bg-totals: #1e293b;
+  --bg-top-item: #1e293b;
+  --bg-top-item-hover: #273549;
+  --bg-kpi-icon: #334155;
+  --bg-modal: #1e293b;
+  --bg-modal-input: #0f172a;
+  --bg-toggle: #334155;
+  --bg-tx-form: #1e293b;
+  --bg-change-password: #1e293b;
+  --bg-top-consumed: #1e293b;
+  --bg-spill: #1e293b;
+  --bg-tab: #1e293b;
+  --bg-consumption-table: #1e293b;
+
+  --sidebar-gradient-from: #0f172a;
+  --sidebar-gradient-to: #0f172a;
+  --sidebar-border: rgba(148, 163, 184, 0.12);
+
+  --text-primary: #f1f5f9;
+  --text-heading: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  --border-default: #334155;
+  --border-card: #334155;
+  --border-subtle: #334155;
+  --border-input: #475569;
+  --border-table: #334155;
+  --border-cell: #334155;
+
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-modal: 0 24px 64px rgba(0, 0, 0, 0.5);
+
+  --btn-secondary-bg: #1e293b;
+  --btn-secondary-text: #f1f5f9;
+  --btn-secondary-border: #475569;
+  --btn-secondary-hover: #334155;
+  --btn-icon-hover: #334155;
+
+  --modal-actions-border: #334155;
+  --modal-close-hover-bg: #334155;
+  --modal-close-hover-text: #f1f5f9;
+
+  --row-warning-bg: rgba(234, 179, 8, 0.15);
+  --row-danger-bg: rgba(239, 68, 68, 0.12);
+
+  --cat-tag-bg: #334155;
+  --cat-tag-text: #cbd5e1;
+
+  --bar-track: #334155;
+  --period-count-bg: #334155;
+
+  --loading-text: #94a3b8;
+
+  --auth-page-bg: #0f172a;
+  --auth-page-gradient-1: rgba(79, 92, 243, 0.12);
+  --auth-page-gradient-2: rgba(79, 92, 243, 0.08);
+  --auth-page-gradient-end: #1e293b;
+  --auth-card-bg: #1e293b;
+  --auth-card-border: #334155;
+  --auth-card-shadow: 0 18px 48px rgba(0, 0, 0, 0.4);
+  --auth-title: #f1f5f9;
+  --auth-sub: #94a3b8;
+  --auth-input-bg: #0f172a;
+  --auth-input-border: #475569;
+  --auth-input-text: #f1f5f9;
+  --auth-input-focus-bg: #1e293b;
+  --auth-icon: #94a3b8;
+  --auth-remember: #cbd5e1;
+  --auth-footer: #64748b;
+  --auth-footer-links: #94a3b8;
+}
+
+html[data-theme='dark'] .auth-brand-title {
+  color: #f1f5f9;
+}

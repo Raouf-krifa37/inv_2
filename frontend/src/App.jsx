@@ -6,7 +6,23 @@ import Transactions from './pages/Transactions';
 import ChangePassword from './pages/ChangePassword';
 import Login from './pages/Login';
 import { getMe, logout } from './api';
-import './App.css';
+import { useTheme } from './context/ThemeContext';
+
+function ThemeToggle({ className = 'theme-toggle' }) {
+  const { theme, toggleTheme } = useTheme();
+  const isDark = theme === 'dark';
+  return (
+    <button
+      type="button"
+      className={className}
+      onClick={toggleTheme}
+      aria-label={isDark ? 'Activer le mode clair' : 'Activer le mode sombre'}
+    >
+      <span className="nav-icon">{isDark ? '☀' : '☾'}</span>
+      <span className="nav-txt">{isDark ? 'Mode clair' : 'Mode sombre'}</span>
+    </button>
+  );
+}
 
 function PrivateLayout({ user, onLogout }) {
   const navigate = useNavigate();
@@ -39,6 +55,7 @@ function PrivateLayout({ user, onLogout }) {
           <span className="nav-icon">◍</span><span className="nav-txt">Mot de passe</span>
         </NavLink>
         <div className="sidebar-footer">
+          <ThemeToggle />
           <div className="version">CONNECTÉ EN TANT QUE</div>
           <div className="user-chip">{user.email}</div>
           <button className="btn btn-secondary btn-logout" onClick={handleLogout}>

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { login } from '../api';
+import { useTheme } from '../context/ThemeContext';
 
 function IconEnvelope() {
   return (
@@ -50,11 +51,13 @@ function IconBox() {
 }
 
 export default function Login({ onLoginSuccess }) {
+  const { theme, toggleTheme } = useTheme();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const isDark = theme === 'dark';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,6 +75,14 @@ export default function Login({ onLoginSuccess }) {
 
   return (
     <div className="auth-page">
+      <button
+        type="button"
+        className="auth-theme-toggle"
+        onClick={toggleTheme}
+        aria-label={isDark ? 'Activer le mode clair' : 'Activer le mode sombre'}
+      >
+        {isDark ? '☀ Mode clair' : '☾ Mode sombre'}
+      </button>
       <div className="auth-shell">
         <header className="auth-brand">
           <div className="auth-logo-mark">
