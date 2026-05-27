@@ -19,18 +19,32 @@ function parseAllowedOrigins() {
   return ['http://localhost:5173', 'https://stock-saraya10.vercel.app'];
 }
 
+function isAllowedOrigin(origin) {
+  const allowed = parseAllowedOrigins();
+  if (allowed.includes(origin)) return true;
+  // Allow Vercel preview/alias domains as a safe default.
+  try {
+    const host = new URL(origin).hostname;
+    return host.endsWith('.vercel.app');
+  } catch {
+    return false;
+  }
+}
+
 // Middleware
-app.use(
-  cors({
-    origin(origin, callback) {
-      const allowed = parseAllowedOrigins();
-      if (!origin) return callback(null, true);
-      if (allowed.includes(origin)) return callback(null, true);
-      return callback(new Error('Not allowed by CORS'));
-    },
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin(origin, callback) {
+    if (!origin) return callback(null, true);
+    if (isAllowedOrigin(origin)) return callback(null, true);
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Origin', 'Authorization', 'Content-Type'],
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 app.use(cookieParser());
 app.use(express.json());
 

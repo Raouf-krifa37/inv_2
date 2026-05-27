@@ -1,5 +1,12 @@
-const API_ORIGIN = (import.meta.env.VITE_API_URL || '').replace(/\/+$/, '');
-const BASE = (API_ORIGIN ? API_ORIGIN : '') + '/api';
+const RAW_API_URL = String(import.meta.env.VITE_API_URL || '').trim();
+const API_ORIGIN = RAW_API_URL.replace(/\/+$/, '').replace(/\/api$/i, '');
+const SAME_ORIGIN = typeof window !== 'undefined' ? window.location.origin : '';
+const BASE_CANDIDATES = Array.from(
+  new Set([
+    API_ORIGIN ? `${API_ORIGIN}/api` : '',
+    SAME_ORIGIN ? `${SAME_ORIGIN}/api` : '',
+  ].filter(Boolean))
+);
 
 function getToken() {
   return localStorage.getItem('token');
@@ -21,12 +28,20 @@ export async function fetchJSON(path, options = {}) {
   };
 
   let res;
-  try {
-    res = await fetch(BASE + path, {
-      ...options,
-      headers,
-    });
-  } catch {
+  let networkError = null;
+  for (const base of BASE_CANDIDATES) {
+    try {
+      res = await fetch(base + path, {
+        ...options,
+        headers,
+      });
+      networkError = null;
+      break;
+    } catch (err) {
+      networkError = err;
+    }
+  }
+  if (!res && networkError) {
     throw new Error('Impossible de joindre le serveur');
   }
 
