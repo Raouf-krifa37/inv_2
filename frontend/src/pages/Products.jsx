@@ -232,6 +232,7 @@ export default function Products() {
       {pageLoading ? (
         <div className="loading">⏳ Chargement...</div>
       ) : (
+        <div className="table-scroll">
         <table className="table-compact products-table">
           <thead>
             <tr>
@@ -239,7 +240,7 @@ export default function Products() {
               <th className="col-category">Catégorie</th>
               <th className="col-num">Quantité</th>
               <th className="col-unit">Unité</th>
-              <th className="col-num">Seuil Min</th>
+              <th className="col-num col-min">Seuil Min</th>
               <th className="col-status">Statut</th>
               <th className="col-actions">Actions</th>
             </tr>
@@ -253,8 +254,8 @@ export default function Products() {
                 <td className="col-category"><span className="cat-tag">{p.category}</span></td>
                 <td className="col-num"><strong className={p.quantity === 0 ? 'val-out' : p.quantity <= p.minStock ? 'val-neg' : ''}>{p.quantity}</strong></td>
                 <td className="col-unit">{p.unit}</td>
-                <td className="col-num">{p.minStock}</td>
-                <td>
+                <td className="col-num col-min">{p.minStock}</td>
+                <td className="col-status">
                   {p.quantity === 0
                     ? <span className="badge badge-danger">Rupture</span>
                     : p.quantity <= p.minStock
@@ -270,6 +271,7 @@ export default function Products() {
             ))}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   );

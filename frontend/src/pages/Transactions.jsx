@@ -173,8 +173,8 @@ export default function Transactions() {
       </div>
 
       {/* History */}
-      <div className="section">
-        <div className="section-header">
+      <div className="section section-history">
+        <div className="section-header section-header-stack">
           <h2>Historique</h2>
           <div className="history-filters">
             <select className="filter-select-sm" value={filterType} onChange={e => { setFilterType(e.target.value); setPage(1); }}>
@@ -202,6 +202,7 @@ export default function Transactions() {
           <div className="loading">⏳ Chargement...</div>
         ) : (
           <>
+            <div className="table-scroll">
             <table className="table-compact tx-table">
               <thead>
                 <tr>
@@ -234,6 +235,7 @@ export default function Transactions() {
                 ))}
               </tbody>
             </table>
+            </div>
 
             {/* Pagination */}
             {totalPages > 1 && (

@@ -33,6 +33,7 @@ function ConsumptionTable({ data, maxConsumed }) {
   if (!data || data.length === 0)
     return <p className="empty" style={{ padding: '32px 0' }}>Aucun mouvement sur cette période.</p>;
   return (
+    <div className="table-scroll">
     <table className="consumption-table">
       <thead>
         <tr>
@@ -63,6 +64,7 @@ function ConsumptionTable({ data, maxConsumed }) {
         })}
       </tbody>
     </table>
+    </div>
   );
 }
 
@@ -144,6 +146,7 @@ export default function Dashboard() {
       {stats.lowStockProducts.length > 0 && (
         <div className="section">
           <h2>⚠️ Alertes — Stock Faible</h2>
+          <div className="table-scroll">
           <table>
             <thead>
               <tr><th>Produit</th><th>Stock Actuel</th><th>Seuil Min</th><th>Unité</th><th>Catégorie</th><th>Statut</th></tr>
@@ -164,6 +167,7 @@ export default function Dashboard() {
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       )}
 
@@ -173,6 +177,7 @@ export default function Dashboard() {
         {stats.recentTransactions.length === 0 ? (
           <p className="empty">Aucun mouvement enregistré.</p>
         ) : (
+          <div className="table-scroll">
           <table>
             <thead>
               <tr><th>Produit</th><th>Type</th><th>Qté</th><th>Note</th><th>Date & Heure</th></tr>
@@ -189,6 +194,7 @@ export default function Dashboard() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
     </div>
