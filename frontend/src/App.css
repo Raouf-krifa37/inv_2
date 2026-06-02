@@ -1050,7 +1050,7 @@ body {
 
 /* Compact tables */
 .table-compact {
-  table-layout: fixed;
+  table-layout: auto;
   width: 100%;
 }
 
@@ -1109,8 +1109,20 @@ body {
 .col-note { width: 22%; }
 .col-date { width: 160px; }
 
-.products-table .col-product { width: auto; min-width: 120px; }
-.tx-table .col-product { width: auto; min-width: 120px; }
+/* Product column must keep explicit width (auto collapses to 0 in fixed layout) */
+.products-table .col-product,
+.tx-table .col-product,
+.table-compact th.col-product,
+.table-compact td.col-product {
+  min-width: 140px;
+  width: 28%;
+  max-width: 320px;
+}
+
+.table-compact th.col-product,
+.table-compact td.col-product {
+  display: table-cell;
+}
 
 /* Horizontal scroll wrapper for tables */
 .table-scroll {
@@ -1126,6 +1138,7 @@ body {
 }
 
 .table-scroll .table-compact {
+  width: max-content;
   min-width: 100%;
 }
 
@@ -1306,21 +1319,46 @@ thead { background: #f5f8ff; }
 
   /* Products: hide category + seuil min on small screens */
   .products-table .col-category,
-  .products-table .col-min {
+  .products-table .col-min,
+  .products-table th.col-category,
+  .products-table td.col-category,
+  .products-table th.col-min,
+  .products-table td.col-min {
     display: none;
   }
 
   .products-table {
-    min-width: 520px;
+    min-width: 420px;
   }
 
   /* Movements: hide note column on small screens */
-  .tx-table .col-note {
+  .tx-table .col-note,
+  .tx-table th.col-note,
+  .tx-table td.col-note {
     display: none;
   }
 
   .tx-table {
-    min-width: 480px;
+    min-width: 400px;
+  }
+
+  /* PRODUIT always visible — never collapse */
+  .products-table .col-product,
+  .tx-table .col-product,
+  .table-compact th.col-product,
+  .table-compact td.col-product {
+    display: table-cell !important;
+    visibility: visible !important;
+    min-width: 120px;
+    width: auto;
+    max-width: none;
+  }
+
+  .table-compact .prod-name {
+    overflow: visible;
+    text-overflow: unset;
+    white-space: normal;
+    word-break: break-word;
   }
 
   .table-compact th,
@@ -1328,12 +1366,16 @@ thead { background: #f5f8ff; }
     padding: 8px 10px;
   }
 
-  .col-num { min-width: 56px; }
-  .col-unit { min-width: 64px; }
-  .col-status { min-width: 72px; }
-  .col-type { min-width: 72px; }
-  .col-actions { min-width: 64px; }
-  .col-date { min-width: 120px; }
+  .table-compact th.col-product {
+    white-space: nowrap;
+  }
+
+  .col-num { min-width: 56px; width: 56px; }
+  .col-unit { min-width: 64px; width: 64px; }
+  .col-status { min-width: 72px; width: 72px; }
+  .col-type { min-width: 72px; width: 72px; }
+  .col-actions { min-width: 64px; width: 64px; }
+  .col-date { min-width: 120px; width: 120px; }
 
   .pagination {
     flex-wrap: wrap;
